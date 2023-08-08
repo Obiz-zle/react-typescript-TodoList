@@ -1,20 +1,22 @@
 
 import { useRef } from "react";
 import "./styles.css"
+import { Actions } from "../model";
 
 
 interface PropsType{
     todo: string;
     setTodo: React.Dispatch<React.SetStateAction<string>>;
     handleAdd:(e:React.FormEvent) => void;
+    //dispatch: React.Dispatch<Actions>
 }
 
-const InputField = ({todo, setTodo, handleAdd} : PropsType) => {
+const InputField = ({todo, setTodo, handleAdd } : PropsType) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <form className="input" onSubmit={(e) => {handleAdd(e); inputRef.current?.blur()}}>
+    <form className="input" onSubmit={(e) => {handleAdd(e); inputRef.current?.blur();}}>
         <input 
                ref={inputRef}
                type="input" 

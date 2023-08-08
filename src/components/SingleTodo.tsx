@@ -1,4 +1,4 @@
-import { Todo } from "../model";
+import { Actions, Todo } from "../model";
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai'
 import { MdDone } from 'react-icons/md'
 import "./styles.css"
@@ -7,10 +7,11 @@ import { useEffect, useRef, useState } from "react";
 type PropsType = {
     todo:Todo,
     todos:Todo[],
-    setTodos:React.Dispatch<React.SetStateAction<Todo[]>>
+    //setTodos:React.Dispatch<React.SetStateAction<Todo[]>>
+    dispatch: React.Dispatch<Actions>
 }
 
-const SingleTodo = ({ todo, todos, setTodos}: PropsType) => {
+const SingleTodo = ({ todo, todos, dispatch }: PropsType) => {
     const [edit, setEdit] = useState<boolean>(false);
     const [editTodo, setEditTodo] = useState<string>(todo.todo);
 
@@ -22,16 +23,19 @@ const SingleTodo = ({ todo, todos, setTodos}: PropsType) => {
 
 
     const handleDone = (id:number) => {
-        setTodos(todos.map(todo => todo.id === id?{...todo, isDone:!todo.isDone} : todo));
+        //setTodos(todos.map(todo => todo.id === id?{...todo, isDone:!todo.isDone} : todo));
+        dispatch({type:"done", payload:id})
     }
 
     const handleDelete = (id:number) => {
-        setTodos(todos.filter(todo => todo.id !== id));
+        //setTodos(todos.filter(todo => todo.id !== id));
+        dispatch({type:"remove", payload:id})
     }
 
     const handleEdit = (e:React.FormEvent, id:number) =>{
         e.preventDefault();
-        setTodos(todos.map(todo => todo.id===id?{...todo, todo:editTodo} : todo ));
+        //setTodos(todos.map(todo => todo.id===id?{...todo, todo:editTodo} : todo ));
+        dispatch({type:"edit", payload:{id:id, modified:editTodo}});
         setEdit(false);
     }
 
