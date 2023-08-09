@@ -10,6 +10,7 @@ export interface Todo{
 export type Actions = { type: "add"; payload: string }  | 
                      { type: "done"; payload: number }  |
                      { type: "remove"; payload: number }|
+                     { type: "reset"; payload: Todo[] }|
                      { type: "edit"; payload: { id: number, modified: string } }
 
                      
@@ -27,6 +28,9 @@ export function TodoReducer(state:Todo[], action:Actions){
 
         case "edit":
             return state.map(todo => todo.id === action.payload.id? { ...todo, todo: action.payload.modified } : todo)
+
+        case "reset":
+            return [...action.payload]
             
         
         default:
